@@ -1,6 +1,4 @@
-# Task List in LAravel
-
-## About this repository
+## Task List in Laravel
 
 This quickstart guide provides a basic introduction to the Laravel framework and includes content on database migrations, the Eloquent ORM, routing, validation, views, and Blade templates. This is a great starting point if you are brand new to the Laravel framework or PHP frameworks in general.
 
