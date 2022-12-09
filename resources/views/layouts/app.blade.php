@@ -9,13 +9,7 @@
 
 <body>
 
-    @include('layouts.partials.nav')
-
-    @include('layouts.partials.header')
-
     @yield('content')
-
-    <hr>
 
     @include('layouts.partials.footer')
 

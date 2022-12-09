@@ -2,75 +2,109 @@
 
 @section('content')
 
-    <!-- Bootstrap Boilerplate... -->
+    <div class="container">
 
-    <!-- Create Task Form -->
-    <div class="panel-body">
+        <div class="row">
 
-        <!-- Display Validation Errors -->
-        @include('common.errors')
+            <div class="pt-5">
 
-        <!-- New Task Form -->
-        <form action="/task" method="POST" class="form-horizontal">
+                <!-- Display Validation Errors -->
+                @include('common.errors')
 
-            {{ csrf_field() }}
+                <section class="jumbotron text-center">
 
-            <!-- Task Name -->
+                    <div class="container">
 
-            <div class="form-group">
-                <label for="task">Task</label>
-                <input type="text" name="name" id="task-name" class="form-control" placeholder="Task name here">
+                        <h1 class="jumbotron-heading">Task List</h1>
+
+                        <p class="lead text-muted">
+                            This quickstart guide provides a basic introduction to the Laravel framework and includes
+                            content on database migrations, the Eloquent ORM, routing, validation, views, and Blade
+                            templates. This is a great starting point if you are brand new to the Laravel framework or PHP
+                            frameworks in general.
+                        </p>
+
+                    </div>
+
+                    <hr>
+
+                </section>
+
             </div>
 
-            <!-- Add Task Button -->
-            <button type="submit" class="btn btn-primary">
-                <i class="fa fa-plus"></i> Add Task
-            </button>
-        </form>
-        
+            <div class="py-2">
 
+                <!-- New Task Form -->
+                <form action="/task" method="POST" class="form-horizontal">
+
+                    {{ csrf_field() }}
+
+                    <!-- Task Name -->
+
+                    <div class="form-group">
+
+                        <div class="form-group mb-2">
+
+                            <label for="task" class="sr-only">Task</label>
+
+                            <input type="text" name="name" id="task-name" class="form-control"
+                                placeholder="Task name here">
+
+                        </div>
+
+                        <!-- Add Task Button -->
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fa fa-plus"></i> Add Task
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+            <div class="py-5">
+
+                <!-- List Tasks -->
+                @if (count($tasks) > 0)
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Task Name</th>
+                                <th scope="col">Created At</th>
+                                <th scope="col">Due</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @foreach ($tasks as $task)
+                                <tr>
+
+                                    <th scope="row"> {{ $task->id }} </th>
+                                    <td>{{ $task->name }}</td>
+                                    <td>{{ $task->created_at }}</td>
+                                    <td> Data </td>
+                                    <td>
+                                        <form action="/task/{{ $task->id }}" method="post">
+                                            {{ csrf_field() }}
+                                            {{ method_field('DELETE') }}
+                                            <!-- We can spoof a DELETE request -->
+
+                                            <button>Delete Task</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            @endforeach
+
+                        </tbody>
+                    </table>
+                @endif
+
+            </div>
+
+        </div>
     </div>
 
-    <!-- Current Tasks -->
-    @if (count($tasks) > 0)
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                Current Tasks
-            </div>
-
-            <div class="panel-body">
-                <div class="table table-striped task-table">
-
-                    <!-- Table Headings -->
-                    <thead>
-                        <th>Task</th>
-                        <th>&nbsp;</th>
-                    </thead>
-
-                    <!-- Table Body -->
-                    <tbody>
-                        @foreach ($tasks as $task)
-                            <tr>
-                                <!-- Task Name -->
-                                <td class="table-text">
-                                    <div>{{ $task->name }}</div>
-                                </td>
-
-                                <!-- Delete Button -->
-                                <td>
-                                    <form action="/task/{{ $task->id }}" method="post">
-                                        {{ csrf_field() }}
-                                        {{ method_field('DELETE') }}
-                                        <!-- We can spoof a DELETE request -->
-
-                                        <button>Delete Task</button>
-                                    </form>
-                                </td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </div>
-            </div>
-        </div>
-    @endif
 @endsection
